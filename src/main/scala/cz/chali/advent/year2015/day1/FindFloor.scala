@@ -1,12 +1,13 @@
 package cz.chali.advent.year2015.day1
 
-import java.io.InputStream
-
-import scala.io.Source
+import cz.chali.advent.year2015.input.InputReader
 
 object FindFloor extends App {
-    def inputFile: InputStream = getClass.getResourceAsStream("floorInput")
-    def fileContent = Source.fromInputStream(inputFile).mkString
-    def result = fileContent.map(char => if (char == '(') 1 else -1).sum
-    println(s"Result: $result")
+    val fileContent: String = InputReader.readText("/cz/chali/advent/year2015/day1/floorInput")
+    val result = findFloor(fileContent)
+    println(s"End floor is: $result")
+
+    def findFloor(fileContent: String): Int = {
+        fileContent.map(char => if (char == '(') 1 else -1).sum
+    }
 }

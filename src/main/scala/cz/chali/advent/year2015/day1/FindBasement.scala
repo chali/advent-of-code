@@ -1,15 +1,14 @@
 package cz.chali.advent.year2015.day1
 
-import java.io.InputStream
-
-import scala.io.Source
+import cz.chali.advent.year2015.input.InputReader
 
 object FindBasement extends App {
-    def inputFile: InputStream = getClass.getResourceAsStream("floorInput")
-    def fileContent: String = Source.fromInputStream(inputFile).mkString
-    def floorChanges: IndexedSeq[Int] = fileContent.map(char => if (char == '(') 1 else -1)
-
-    def firstBasementHit: Int = floorChanges.scanLeft(0)((a: Int, b: Int) => a + b).indexOf(-1)
-
+    val fileContent: String = InputReader.readText("/cz/chali/advent/year2015/day1/floorInput")
+    val firstBasementHit: Int = findFirstBasementHit(fileContent)
     println(s"Basement in steps: $firstBasementHit")
+
+    def findFirstBasementHit(fileContent: String): Int = {
+        def floorChanges: IndexedSeq[Int] = fileContent.map(char => if (char == '(') 1 else -1)
+        floorChanges.scanLeft(0)((a: Int, b: Int) => a + b).indexOf(-1)
+    }
 }
