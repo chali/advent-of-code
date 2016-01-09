@@ -4,7 +4,6 @@ import cz.chali.advent.year2015.input.InputReader
 
 object PackageSize {
 
-
     def computeSize(fileLines: List[String]): Int = {
         fileLines.map(parseLine).map(computeOnePackageSize).sum
     }
@@ -26,6 +25,8 @@ object PackageSize {
     def sidePairs(packageSize: List[Int]) : List[List[Int]] = {
         packageSize match {
             case length :: width :: height :: _ => List(List(length, width), List(length, height), List(width, height))
+            case _ => throw new IllegalArgumentException("Package doesn't have" +
+                " proper size format")
         }
     }
 
