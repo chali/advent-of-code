@@ -12,6 +12,8 @@ object Paths {
         val distanceMap: Map[Set[String], Int] = connections.map(connection =>
             Set(connection.point1, connection.point2) -> connection.distance).toMap
 
+        //Algorithm currently works only with complete graphs. It would require to put infinity
+        //when there is no connection or completely change the way how possible path are created (not use permutation)
         val possiblePaths: Map[List[String], Int] = cities.permutations.map(possiblePath => {
             val pathDistance = possiblePath.sliding(2).foldLeft(0)((distance, points) => distance + distanceMap(points.toSet))
             possiblePath -> pathDistance
