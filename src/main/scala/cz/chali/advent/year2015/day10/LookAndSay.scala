@@ -7,7 +7,7 @@ object LookAndSay {
             throw new IllegalArgumentException("Input cannot be empty")
         val inputAsList = input.toList
         val firstChar = inputAsList.head
-        val resultAsTouples = inputAsList.tail.foldLeft(List((firstChar, 1)))(
+        val resultAsTuples = inputAsList.tail.foldLeft(List((firstChar, 1)))(
             (currentResult: List[(Char, Int)], currentChar: Char) => {
                 val previous = currentResult.head
                 if (previous._1 == currentChar) {
@@ -17,7 +17,7 @@ object LookAndSay {
                 }
             }
         )
-        resultAsTouples.reverse.map(touple => s"${touple._2}${touple._1}").mkString
+        resultAsTuples.reverse.map(tuple => s"${tuple._2}${tuple._1}").mkString
     }
 
     def main(args: Array[String]) {
