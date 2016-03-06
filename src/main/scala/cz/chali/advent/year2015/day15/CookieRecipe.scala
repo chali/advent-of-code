@@ -15,28 +15,23 @@ object CookieRecipe {
         val possibleIngredientCombinations = ingredients
             .flatMap(ingredient => List.fill(maxSpoons)(ingredient))
             .combinations(maxSpoons)
-        val sumsPerProperty: Iterator[(Int, Int, Int, Int, Int)] = possibleIngredientCombinations.map(ingredientsCandidate =>
-            ingredientsCandidate.foldLeft((0, 0, 0, 0, 0))((accumulator, ingredient) =>
-                (
-                    accumulator._1 + ingredient.capacity,
-                    accumulator._2 + ingredient.durability,
-                    accumulator._3 + ingredient.flavor,
-                    accumulator._4 + ingredient.texture,
-                    accumulator._5 + ingredient.calories
-                    )
-            )
-        )
+        val sumsPerProperty: Iterator[(Int, Int, Int, Int, Int)] = possibleIngredientCombinations
+            .map(ingredientsCandidate => ingredientsCandidate.foldLeft((0, 0, 0, 0, 0))(sumProperties))
         val filteredSumPerProperty = sumsPerProperty.filter(scores => caloriesFilter(scores._5))
-        val scorePerCandidate: Iterator[Int] = filteredSumPerProperty.map(candidateSums =>
-
-                Math.max(candidateSums._1, 0) *
-                Math.max(candidateSums._2, 0) *
-                Math.max(candidateSums._3, 0) *
-                Math.max(candidateSums._4, 0)
-
-        )
+        val scorePerCandidate: Iterator[Int] = filteredSumPerProperty.map(calculateFinalScore)
         scorePerCandidate.max
     }
+
+    def sumProperties(accumulator: (Int, Int, Int, Int, Int), ingredient: Ingredient) = {
+        (accumulator._1 + ingredient.capacity, accumulator._2 + ingredient.durability,
+            accumulator._3 + ingredient.flavor, accumulator._4 + ingredient.texture,
+            accumulator._5 + ingredient.calories)
+    }
+
+    def calculateFinalScore(propertySums: (Int, Int, Int, Int, Int)) =
+        Math.max(propertySums._1, 0) * Math.max(propertySums._2, 0) * Math.max(propertySums._3, 0) *
+            Math.max(propertySums._4, 0)
+
 
     def parse(line: String): Ingredient = {
         line match {
