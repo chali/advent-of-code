@@ -6,8 +6,7 @@ case class Aunt(id: Int, information: Map[String, Int])
 
 object AuntDetection {
 
-    val lineParserRegex =
-        """Sue (\d+): (.+)""".r
+    val lineParserRegex = """Sue (\d+): (.+)""".r
 
     def findAunt(rawAunts: List[String], clues: Map[String, (Int) => Boolean]): Int = {
         val aunts = rawAunts.map(parse)
