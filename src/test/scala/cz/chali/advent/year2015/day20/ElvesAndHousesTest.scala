@@ -11,5 +11,8 @@ class ElvesAndHousesTest extends WordSpec {
             assert(ElvesAndHouses.findLowestHouseNumber(80) == 6)
         }
 
+        "deliver at least x given presents but elves deliver only to one house" in {
+            assert(ElvesAndHouses.findLowestHouseNumber(30, 1, 10) == 3)
+        }
     }
 }
