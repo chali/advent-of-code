@@ -1,28 +1,4 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath('com.github.maiflai:gradle-scalatest:0.6-5-g9065d91')
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-apply plugin: 'scala'
-apply plugin: 'com.github.maiflai.scalatest'
-
 version = '1.0'
-
-dependencies {
-    compile('org.scala-lang:scala-library:2.11.7')
-    compile('org.json4s:json4s-jackson_2.11:3.3.0')
-
-    testCompile('org.scalatest:scalatest_2.11:2.2.1')
-    testRuntime('org.pegdown:pegdown:1.1.0')
-}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.1'
