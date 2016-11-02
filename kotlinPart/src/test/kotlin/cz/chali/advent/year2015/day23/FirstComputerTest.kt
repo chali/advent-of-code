@@ -12,8 +12,8 @@ class FirstComputerTest : WordSpec() {
                         "tpl a",
                         "inc a"
                 )
-                val registers = FirstComputer().processInstructions(instructions)
-                registers["a"] shouldBe 2
+                val registers = FirstComputer().processInstructions(instructions, registers = mapOf("a" to 0L))
+                registers["a"] shouldBe 2L
             }
         }
     }
