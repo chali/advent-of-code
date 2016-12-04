@@ -1,0 +1,45 @@
+package cz.chali.advent.year2016.day3
+
+import cz.chali.advent.year2015.input.Reader
+
+class TrianglesVerification {
+
+    fun numberOfCorrectTriangles(rawTriangles: List<String>): Int {
+        val sides = rawTriangles.map { row -> parse(row)}
+        val sortedSides = sides.map { it.sorted() }
+        return sortedSides.count { it[0] + it[1] > it[2] }
+    }
+
+    fun numberOfCorrectTrianglesByColumn(rawTriangles: List<String>): Int {
+        val sidesByColumn = rawTriangles.map { row -> parse(row)}
+        val sidesByRow = convertToRows(sidesByColumn)
+        val sortedSides = sidesByRow.map { it.sorted() }
+        return sortedSides.count { it[0] + it[1] > it[2] }
+    }
+
+    private fun convertToRows(sidesByColumn: List<List<Int>>): List<List<Int>> {
+        val ranges = (1..(sidesByColumn.size / 3)).map { ((it - 1) * 3) .. (it * 3) -1 }
+        val groupsOfColumnOrientedTriangles = ranges.map { sidesByColumn.slice(it) }
+        val groupsOfRowOrientedTriangles = groupsOfColumnOrientedTriangles.map { transpose(it) }
+        return groupsOfRowOrientedTriangles.flatten()
+    }
+
+    private fun transpose(matrix: List<List<Int>>): List<List<Int>> {
+        return matrix.indices.map { x ->
+            matrix.indices.map { matrix[it][x] }
+        }
+    }
+
+    fun parse(row: String): List<Int> {
+        val matchResult = Regex(" +(\\d+) +(\\d+) +(\\d+)").matchEntire(row)
+        val groupValues = matchResult?.groupValues?.drop(1)
+        return groupValues?.map(String::toInt)
+                ?: throw IllegalArgumentException("Could not parse $row")
+    }
+}
+
+fun main(args: Array<String>) {
+    val triangleSides = Reader().readFile("/cz/chali/advent/year2016/day3/triangles.txt")
+    val possibleTriangles = TrianglesVerification().numberOfCorrectTrianglesByColumn(triangleSides)
+    println(possibleTriangles)
+}

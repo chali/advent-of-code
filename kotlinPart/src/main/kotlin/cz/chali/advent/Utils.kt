@@ -11,3 +11,16 @@ fun <T, R> Iterable<T>.scan(initial: R, operation: (element: T, previous: R) -> 
     }
     return result
 }
+
+fun <T> Iterable<T>.combinations(groupSize: Int): Iterable<List<T>> {
+    fun comb(elements: Iterable<T>, size: Int): Iterable<List<T>> {
+        if (size == 1)
+            return elements.map { listOf(it) }
+        else {
+            return elements.mapIndexed { index, element ->
+                comb(elements.drop(index + 1), size - 1).map { it.plusElement(element) }
+            }.flatten()
+        }
+    }
+    return comb(this, groupSize)
+}

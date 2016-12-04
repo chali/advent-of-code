@@ -36,9 +36,7 @@ interface KeyPad {
     val keys: Array<Array<String>>
     val startingKey: Coordinate
 
-    fun getPassword(coordinates: List<Coordinate>) = coordinates.subList(1, coordinates.size)
-            .map({ keys[it.y][it.x] })
-            .joinToString(separator = "")
+    fun getPassword(coordinates: List<Coordinate>) = coordinates.map({ keys[it.y][it.x] }).joinToString(separator = "")
 }
 
 class EntranceKeyPad : KeyPad {
@@ -74,7 +72,7 @@ class PasswordFinder {
         val coordinates = allDirections.scan(keyPad.startingKey, { directions, previous ->
             directions.fold(previous, { start, direction -> direction.move(keyPad, start)})
         })
-        return keyPad.getPassword(coordinates)
+        return keyPad.getPassword(coordinates.subList(1, coordinates.size))
     }
 
     private fun parse(rawAllDirections: List<String>): List<List<Direction>> {
