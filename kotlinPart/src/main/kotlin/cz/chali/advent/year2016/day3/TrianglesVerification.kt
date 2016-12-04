@@ -5,16 +5,26 @@ import cz.chali.advent.year2015.input.Reader
 class TrianglesVerification {
 
     fun numberOfCorrectTriangles(rawTriangles: List<String>): Int {
-        val sides = rawTriangles.map { row -> parse(row)}
+        val sides = parseTriangles(rawTriangles)
         val sortedSides = sides.map { it.sorted() }
         return sortedSides.count { it[0] + it[1] > it[2] }
     }
 
     fun numberOfCorrectTrianglesByColumn(rawTriangles: List<String>): Int {
-        val sidesByColumn = rawTriangles.map { row -> parse(row)}
+        val sidesByColumn = parseTriangles(rawTriangles)
         val sidesByRow = convertToRows(sidesByColumn)
         val sortedSides = sidesByRow.map { it.sorted() }
         return sortedSides.count { it[0] + it[1] > it[2] }
+    }
+
+    private fun parseTriangles(rawTriangles: List<String>): List<List<Int>> {
+        val parsingRegex = Regex(" +(\\d+) +(\\d+) +(\\d+)")
+        return rawTriangles.map { row ->
+            val matchResult = parsingRegex.matchEntire(row)
+            val groupValues = matchResult?.groupValues?.drop(1)
+            groupValues?.map(String::toInt)
+                    ?: throw IllegalArgumentException("Could not parse $row")
+        }
     }
 
     private fun convertToRows(sidesByColumn: List<List<Int>>): List<List<Int>> {
@@ -28,13 +38,6 @@ class TrianglesVerification {
         return matrix.indices.map { x ->
             matrix.indices.map { matrix[it][x] }
         }
-    }
-
-    fun parse(row: String): List<Int> {
-        val matchResult = Regex(" +(\\d+) +(\\d+) +(\\d+)").matchEntire(row)
-        val groupValues = matchResult?.groupValues?.drop(1)
-        return groupValues?.map(String::toInt)
-                ?: throw IllegalArgumentException("Could not parse $row")
     }
 }
 

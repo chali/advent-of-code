@@ -75,8 +75,9 @@ class GridTravel {
 
     private fun parseSteps(rawSteps: String): List<Step> {
         val splitSteps = rawSteps.split(",")
+        val parsingRegex = Regex("([R,L])(\\d+)")
         return splitSteps.map(String::trim).map { rawStep: String ->
-            val matchResult = Regex("([R,L])(\\d+)").matchEntire(rawStep)
+            val matchResult = parsingRegex.matchEntire(rawStep)
             val (turn, distance) = matchResult?.destructured ?: throw IllegalArgumentException("Parsing failed")
             Step(if (turn == "R") Turn.RIGHT else Turn.LEFT, distance.toInt())
         }
