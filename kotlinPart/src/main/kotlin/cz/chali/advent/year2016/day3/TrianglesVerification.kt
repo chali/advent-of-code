@@ -1,5 +1,6 @@
 package cz.chali.advent.year2016.day3
 
+import cz.chali.advent.transpose
 import cz.chali.advent.year2015.input.Reader
 
 class TrianglesVerification {
@@ -30,14 +31,8 @@ class TrianglesVerification {
     private fun convertToRows(sidesByColumn: List<List<Int>>): List<List<Int>> {
         val ranges = (1..(sidesByColumn.size / 3)).map { ((it - 1) * 3) .. (it * 3) -1 }
         val groupsOfColumnOrientedTriangles = ranges.map { sidesByColumn.slice(it) }
-        val groupsOfRowOrientedTriangles = groupsOfColumnOrientedTriangles.map { transpose(it) }
+        val groupsOfRowOrientedTriangles = groupsOfColumnOrientedTriangles.map { it.transpose() }
         return groupsOfRowOrientedTriangles.flatten()
-    }
-
-    private fun transpose(matrix: List<List<Int>>): List<List<Int>> {
-        return matrix.indices.map { x ->
-            matrix.indices.map { matrix[it][x] }
-        }
     }
 }
 

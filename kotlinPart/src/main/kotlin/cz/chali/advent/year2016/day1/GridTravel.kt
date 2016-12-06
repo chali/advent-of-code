@@ -66,11 +66,11 @@ class GridTravel {
     }
 
     private fun movesToPath(initialPoint: Point, steps: List<Move>): List<Point> {
-        return steps.scan(listOf(initialPoint), {move, previous -> move.from(previous.last()) }).flatten()
+        return steps.scan(listOf(initialPoint), {previous, move -> move.from(previous.last()) }).flatten()
     }
 
     private fun stepsToMoves(startPoint: Move, steps: List<Step>): List<Move> {
-        return steps.scan(startPoint, { step, previous -> Move(previous.direction.nextDirection(step.turn), step.distance) })
+        return steps.scan(startPoint, { previous, step  -> Move(previous.direction.nextDirection(step.turn), step.distance) })
     }
 
     private fun parseSteps(rawSteps: String): List<Step> {

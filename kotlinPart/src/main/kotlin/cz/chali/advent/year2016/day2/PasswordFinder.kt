@@ -69,7 +69,7 @@ class PasswordFinder {
     }
 
     fun findPassword(allDirections: List<List<Direction>>, keyPad: KeyPad): String {
-        val coordinates = allDirections.scan(keyPad.startingKey, { directions, previous ->
+        val coordinates = allDirections.scan(keyPad.startingKey, { previous, directions ->
             directions.fold(previous, { start, direction -> direction.move(keyPad, start)})
         })
         return keyPad.getPassword(coordinates.subList(1, coordinates.size))

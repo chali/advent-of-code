@@ -1,11 +1,11 @@
 package cz.chali.advent
 
 
-fun <T, R> Iterable<T>.scan(initial: R, operation: (element: T, previous: R) -> R): List<R> {
+fun <T, R> Iterable<T>.scan(initial: R, operation: (previous: R, element: T) -> R): List<R> {
     var previous = initial
     val result = mutableListOf(initial)
     for (element in this) {
-        val next = operation(element, previous)
+        val next = operation(previous, element)
         result.add(next)
         previous = next
     }
@@ -23,4 +23,13 @@ fun <T> Iterable<T>.combinations(groupSize: Int): Iterable<List<T>> {
         }
     }
     return comb(this, groupSize)
+}
+
+fun <T> List<List<T>>.transpose(): List<List<T>> {
+    val size = this.first().size
+    if (this.any { it.size != size })
+        throw IllegalArgumentException("Matrix must be rectangle")
+    return (0 .. size - 1).map { x ->
+        this.indices.map { this[it][x] }
+    }
 }
