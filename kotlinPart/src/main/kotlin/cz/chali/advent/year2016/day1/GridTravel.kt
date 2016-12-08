@@ -38,7 +38,7 @@ class GridTravel {
     fun shortestDistance(rawSteps: String): Int {
         val steps = parseSteps(rawSteps)
         val moves = stepsToMoves(Move(Direction.NORTH, 0),steps)
-        val path = movesToPath(Point(0, 0), moves.subList(1, moves.size))
+        val path = movesToPath(Point(0, 0), moves.drop(1))
         return computeDistance(path.first(), path.last())
     }
 
@@ -46,7 +46,7 @@ class GridTravel {
         val steps = parseSteps(rawSteps)
         val moves = stepsToMoves(Move(Direction.NORTH, 0),steps)
         val initialPoint = Point(0, 0)
-        val path = movesToPath(initialPoint, moves.subList(1, moves.size))
+        val path = movesToPath(initialPoint, moves.drop(1))
         val firstCommonPoint = findFirstCommonPoint(path)
         return computeDistance(initialPoint, firstCommonPoint)
     }
@@ -54,7 +54,7 @@ class GridTravel {
     private fun findFirstCommonPoint(path: List<Point>): Point {
         for (point in path) {
             val currentPointIndex = path.indexOf(point)
-            val nextSamePointIndex = path.subList(currentPointIndex + 1, path.size).indexOf(point)
+            val nextSamePointIndex = path.drop(currentPointIndex + 1).indexOf(point)
             if (nextSamePointIndex >= 0)
                 return point
         }

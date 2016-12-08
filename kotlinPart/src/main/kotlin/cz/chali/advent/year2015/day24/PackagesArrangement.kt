@@ -44,7 +44,7 @@ class PackagesArrangement(val numberOfGroups: Int) {
         } else {
             return packages.filter { it <= possibleSpace }.zip(0 .. packages.size).flatMap { pair ->
                 val (packageWeight, index) = pair
-                val remaining = packages.subList(index + 1, packages.size)
+                val remaining = packages.drop(index + 1)
                 findGroupsOfTargetWeightAndSize(groupSize - 1, remaining, possibleSpace - packageWeight).map { restGroup ->
                     restGroup.plusElement(packageWeight)
                 }

@@ -72,7 +72,7 @@ class PasswordFinder {
         val coordinates = allDirections.scan(keyPad.startingKey, { previous, directions ->
             directions.fold(previous, { start, direction -> direction.move(keyPad, start)})
         })
-        return keyPad.getPassword(coordinates.subList(1, coordinates.size))
+        return keyPad.getPassword(coordinates.drop(1))
     }
 
     private fun parse(rawAllDirections: List<String>): List<List<Direction>> {

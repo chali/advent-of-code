@@ -33,3 +33,7 @@ fun <T> List<List<T>>.transpose(): List<List<T>> {
         this.indices.map { this[it][x] }
     }
 }
+
+fun <T> List<T>.sliding(windowSize: Int): List<List<T>> {
+    return this.dropLast(windowSize - 1).mapIndexed { i, s -> this.subList(i, i + windowSize) }
+}
