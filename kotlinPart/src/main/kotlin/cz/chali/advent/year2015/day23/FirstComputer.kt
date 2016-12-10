@@ -1,5 +1,6 @@
 package cz.chali.advent.year2015.day23
 
+import cz.chali.advent.InputParser
 import cz.chali.advent.year2015.input.Reader
 import java.util.*
 
@@ -66,8 +67,9 @@ class JumpIfOne(val register: String, val offset: Int) : Instruction() {
     }
 }
 
-class InstructionParser {
-    val instructionRegexToParsingClosure: Map<Regex, (MatchResult) -> Instruction> = mapOf(
+class FirstComputer {
+
+    val parser = InputParser(mapOf(
             Regex("inc ([a-zA-Z])") to { result: MatchResult ->
                 val (register) = result.destructured
                 Increment(register)
@@ -92,36 +94,16 @@ class InstructionParser {
                 val (register, sign, offset) = result.destructured
                 JumpIfOne(register, (if (sign == "-") -1 else 1) * Integer.parseInt(offset))
             }
-    )
+    ))
 
-    fun parse(rawInstruction: String): Instruction {
-        val matchedInstructionRegex: Regex = instructionRegexToParsingClosure.keys.first { it.matches(rawInstruction) }
-        val instruction: Instruction? = instructionRegexToParsingClosure[matchedInstructionRegex]?.let { parsingClosure: (MatchResult) -> Instruction ->
-            matchedInstructionRegex.matchEntire(rawInstruction)?.let(parsingClosure)
-        }
-        if (instruction != null)
-            return instruction
-        else
-            throw IllegalStateException("Instruction '$rawInstruction' could not be parsed.")
-
-    }
-}
-
-
-class FirstComputer {
     fun processInstructions(rawInstructions: List<String>, registers: Map<String, Long>): Map<String, Long> {
-        val program: List<Instruction> = parseProgram(rawInstructions)
+        val program: List<Instruction> = parser.parseAll(rawInstructions.map(String::trim))
         var context = ExecutionContext(0, registers)
         while (0 <= context.processLine && context.processLine < program.size) {
             val instruction = program[context.processLine]
             context = instruction.evaluate(context)
         }
         return context.registers
-    }
-
-    private fun parseProgram(rawInstructions: List<String>): List<Instruction> {
-        val parser = InstructionParser()
-        return rawInstructions.map(String::trim).map { parser.parse(it) }
     }
 }
 

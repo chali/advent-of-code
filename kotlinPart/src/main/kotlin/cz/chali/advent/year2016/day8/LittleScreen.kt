@@ -1,5 +1,6 @@
 package cz.chali.advent.year2016.day8
 
+import cz.chali.advent.InputParser
 import cz.chali.advent.transpose
 import cz.chali.advent.year2015.input.Reader
 
@@ -69,19 +70,7 @@ fun <T> rotateRight(list: List<T>, n: Int): List<T> {
 
 class LittleScreen(val width: Int, val height: Int) {
 
-    fun countEnabledLights(rawInstructions: List<String>): Int {
-        val instructions = InstructionParser().parseAll(rawInstructions)
-        val finalState = instructions.fold(Display.create(width, height), { display, instruction ->
-            val newDisplay = instruction.evaluate(display)
-            newDisplay.print()
-            newDisplay
-        })
-        return finalState.lights.sumBy { it.count { it } }
-    }
-}
-
-class InstructionParser {
-    val instructionRegexToParsingClosure: Map<Regex, (MatchResult) -> Instruction> = mapOf(
+    val parser = InputParser(mapOf(
             Regex("rect (\\d+)x(\\d+)") to { result: MatchResult ->
                 val (x, y) = result.destructured
                 TurnOnRectangle(x.toInt(), y.toInt())
@@ -94,22 +83,16 @@ class InstructionParser {
                 val (x, n) = result.destructured
                 RotateColumn(x.toInt(), n.toInt())
             }
-    )
+    ))
 
-    fun parseAll(rawInstructions: List<String>): List<Instruction> {
-        return rawInstructions.map { parse(it) }
-    }
-
-    private fun parse(rawInstruction: String): Instruction {
-        val matchedInstructionRegex: Regex = instructionRegexToParsingClosure.keys.first { it.matches(rawInstruction) }
-        val instruction: Instruction? = instructionRegexToParsingClosure[matchedInstructionRegex]?.let { parsingClosure: (MatchResult) -> Instruction ->
-            matchedInstructionRegex.matchEntire(rawInstruction)?.let(parsingClosure)
-        }
-        if (instruction != null)
-            return instruction
-        else
-            throw IllegalStateException("Instruction '$rawInstruction' could not be parsed.")
-
+    fun countEnabledLights(rawInstructions: List<String>): Int {
+        val instructions = parser.parseAll(rawInstructions)
+        val finalState = instructions.fold(Display.create(width, height), { display, instruction ->
+            val newDisplay = instruction.evaluate(display)
+            newDisplay.print()
+            newDisplay
+        })
+        return finalState.lights.sumBy { it.count { it } }
     }
 }
 
