@@ -216,14 +216,14 @@ object WizardSimulator {
             ).applyEffects().endSpells()
             */
             val currentStateAfterEffects = currentState.applyEffects().endSpells()
-            val possibleStates: List[Game] = currentStateAfterEffects.attacker.usableActions
+            val possibleNotDangerousStates: List[Game] = currentStateAfterEffects.attacker.usableActions
                 .flatMap(attackerAction => {
                     val firstAttackerActionFinished = currentStateAfterEffects.doAction(attackerAction).nextTurn
                     val secondAttackerAfterEffects = firstAttackerActionFinished.applyEffects().endSpells()
                     secondAttackerAfterEffects.attacker.usableActions
                         .map(secondAttackerAction => secondAttackerAfterEffects.doAction(secondAttackerAction).nextTurn)
                 })
-            game.enqueue(possibleStates.filterNot(_.whichFighterWon(FighterType.Boss)):_*)
+            game.enqueue(possibleNotDangerousStates.filterNot(_.whichFighterWon(FighterType.Boss)):_*)
             currentState = game.dequeue()
         }
         currentState.winner.map(_.usedMana).get

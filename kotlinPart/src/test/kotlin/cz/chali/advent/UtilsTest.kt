@@ -22,6 +22,13 @@ class UtilsTest : WordSpec() {
         }
 
         "Function" should {
+            "find combinations" {
+                val list = listOf(1)
+                list.combinations(2) shouldBe emptyList<Int>()
+            }
+        }
+
+        "Function" should {
             "find transpose lists" {
                 val list = listOf(listOf(1, 2, 3, 5), listOf(6, 7, 8, 9))
                 val transposed = list.transpose()
