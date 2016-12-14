@@ -48,8 +48,8 @@ object LightsOfLife {
         (x + 1, y + 1), (x + 1, y), (x + 1, y -1),
         (x, y + 1), (x, y -1),
         (x - 1, y + 1), (x - 1, y), (x - 1, y - 1)
-    ).filter( coordinate =>
-        coordinate._1 >= 0 && coordinate._1 < dimensionSize && coordinate._2 >= 0 && coordinate._2 < dimensionSize
+    ).filter( point =>
+        point._1 >= 0 && point._1 < dimensionSize && point._2 >= 0 && point._2 < dimensionSize
     )
 
     def twoDimToOneDim(dimensionSize: Int)(coordinates: (Int, Int)): Int = coordinates._1 * dimensionSize + coordinates._2

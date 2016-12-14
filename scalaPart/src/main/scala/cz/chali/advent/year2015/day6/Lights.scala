@@ -39,8 +39,8 @@ object Lights {
         })
     }
 
-    def coordinatesToTuple(coordinate: String): (Int, Int) = {
-        val coordinateComponents = coordinate.split(',')
+    def coordinatesToTuple(point: String): (Int, Int) = {
+        val coordinateComponents = point.split(',')
         (coordinateComponents(0).toInt, coordinateComponents(1).toInt)
     }
 

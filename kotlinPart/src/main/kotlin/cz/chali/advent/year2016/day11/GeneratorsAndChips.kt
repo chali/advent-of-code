@@ -74,7 +74,7 @@ class GeneratorsAndChips {
     }
 
     private fun parseFloor(floor: String): Set<Component> {
-        val (floorNumberPart, componentsPart) = floor.split("contains")
+        val componentsPart = floor.split("contains")[1]
         return when {
             hasComponents(componentsPart) -> emptySet<Component>()
             hasMoreThenTwoComponents(componentsPart) -> parseMultipleComponents(componentsPart)
