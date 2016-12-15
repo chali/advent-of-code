@@ -37,3 +37,13 @@ fun <T> List<List<T>>.transpose(): List<List<T>> {
 fun <T> List<T>.sliding(windowSize: Int): List<List<T>> {
     return this.dropLast(windowSize - 1).mapIndexed { i, s -> this.subList(i, i + windowSize) }
 }
+
+fun <T> Sequence<T>.sliding(windowSize: Int): Sequence<List<T>> {
+    val restIterator = this.drop(windowSize).iterator()
+    return generateSequence(this.take(windowSize).toList(), { previous ->
+        if (restIterator.hasNext())
+            previous.drop(1) + restIterator.next()
+        else
+            null
+    })
+}

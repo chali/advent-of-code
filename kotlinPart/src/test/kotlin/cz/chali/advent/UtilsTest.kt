@@ -52,5 +52,17 @@ class UtilsTest : WordSpec() {
                 )
             }
         }
+
+        "Function" should {
+            "find create sliding window for sequence" {
+                val sequence = sequenceOf(1, 2, 3, 5)
+                val windows = sequence.sliding(2)
+                windows.toList() shouldBe sequenceOf(
+                        listOf(1, 2),
+                        listOf(2, 3),
+                        listOf(3, 5)
+                ).toList()
+            }
+        }
     }
 }
