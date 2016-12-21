@@ -5,12 +5,12 @@ import io.kotlintest.specs.WordSpec
 class StealingElvesTest : WordSpec() {
     init {
         "You" should {
-            "the latest elf who will get all presents" {
+            "find the latest elf who will get all presents" {
                 val elf = StealingElves().whoWillGetEverything(5)
                 elf shouldBe 3
             }
 
-            "the latest elf who will get all presents" {
+            "find the latest elf who will get all presents" {
                 StealingElves().whoWillGetEverythingStealingFromOpposite(5) shouldBe 2
                 StealingElves().whoWillGetEverythingStealingFromOpposite(6) shouldBe 3
                 StealingElves().whoWillGetEverythingStealingFromOpposite(7) shouldBe 5
