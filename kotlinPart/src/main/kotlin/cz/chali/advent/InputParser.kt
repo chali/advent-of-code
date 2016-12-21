@@ -18,5 +18,3 @@ class InputParser<T>(val instructionRegexToParsingClosure: Map<Regex, (MatchResu
 
     }
 }
-
-
