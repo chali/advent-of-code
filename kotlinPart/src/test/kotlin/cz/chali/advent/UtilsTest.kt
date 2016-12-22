@@ -29,6 +29,18 @@ class UtilsTest : WordSpec() {
         }
 
         "Function" should {
+            "find permutations" {
+                val list = listOf(1, 2, 3, 5)
+                list.permutations(1) shouldBe listOf(listOf(1), listOf(2), listOf(3), listOf(5))
+                list.permutations(2) shouldBe listOf(
+                        listOf(2, 1), listOf(3, 1), listOf(5, 1),
+                        listOf(1, 2), listOf(3, 2), listOf(5, 2),
+                        listOf(1, 3), listOf(2, 3), listOf(5, 3),
+                        listOf(1, 5), listOf(2, 5), listOf(3, 5))
+            }
+        }
+
+        "Function" should {
             "find transpose lists" {
                 val list = listOf(listOf(1, 2, 3, 5), listOf(6, 7, 8, 9))
                 val transposed = list.transpose()

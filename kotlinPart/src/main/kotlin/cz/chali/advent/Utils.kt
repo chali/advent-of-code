@@ -25,6 +25,19 @@ fun <T> Iterable<T>.combinations(groupSize: Int): Iterable<List<T>> {
     return comb(this, groupSize)
 }
 
+fun <T> Iterable<T>.permutations(groupSize: Int): Iterable<List<T>> {
+    fun perm(elements: Iterable<T>, size: Int): Iterable<List<T>> {
+        if (size == 1)
+            return elements.map { listOf(it) }
+        else {
+            return elements.mapIndexed { index, element ->
+                perm(elements.take(index) + elements.drop(index + 1), size - 1).map { it.plusElement(element) }
+            }.flatten()
+        }
+    }
+    return perm(this, groupSize)
+}
+
 fun <T> List<List<T>>.transpose(): List<List<T>> {
     val size = this.first().size
     if (this.any { it.size != size })
