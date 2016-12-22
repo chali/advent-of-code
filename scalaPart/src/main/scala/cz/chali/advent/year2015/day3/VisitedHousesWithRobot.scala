@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day3
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 object VisitedHousesWithRobot {
     def countVisitedHouses(fileContent: String): Int = {

@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day7
 
 import cz.chali.advent.sliding
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 
 class AddressVerification {

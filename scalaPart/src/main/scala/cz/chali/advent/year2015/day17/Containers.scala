@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day17
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 class Container(val capacity: Int)
 

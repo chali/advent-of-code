@@ -1,6 +1,6 @@
 package cz.chali.advent.year2016.day9
 
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 
 class TextDecompressor {

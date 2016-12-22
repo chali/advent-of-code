@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day22
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 import scala.collection.mutable
 import scala.util.matching.Regex

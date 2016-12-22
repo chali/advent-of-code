@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day15
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 case class Ingredient(name: String, capacity: Int, durability: Int, flavor: Int, texture: Int, calories: Int)
 

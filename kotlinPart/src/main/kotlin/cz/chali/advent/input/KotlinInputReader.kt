@@ -1,4 +1,4 @@
-package cz.chali.advent.year2015.input
+package cz.chali.advent.input
 
 import java.io.InputStreamReader
 

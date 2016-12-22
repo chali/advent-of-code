@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day14
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 case class Racer(name: String, speed: Int, energy: Int, rest: Int)
 case class RaceProgress(distance: Int, points: Int)

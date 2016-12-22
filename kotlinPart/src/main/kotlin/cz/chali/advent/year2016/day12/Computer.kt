@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day12
 
 import cz.chali.advent.InputParser
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 import java.util.*
 
 class ExecutionContext(val processLine: Int, val registers: Map<String, Long>) {

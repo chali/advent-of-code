@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day2
 
 import cz.chali.advent.scan
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 data class Coordinate(val x: Int, val y: Int)
 

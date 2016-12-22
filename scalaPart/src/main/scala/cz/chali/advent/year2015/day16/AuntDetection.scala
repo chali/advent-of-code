@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day16
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 case class Aunt(id: Int, information: Map[String, Int])
 

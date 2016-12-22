@@ -1,6 +1,6 @@
 package cz.chali.advent.year2016.day1
 
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 import cz.chali.advent.scan
 
 enum class Turn {

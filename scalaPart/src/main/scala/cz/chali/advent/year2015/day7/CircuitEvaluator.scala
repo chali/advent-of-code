@@ -1,7 +1,7 @@
 package cz.chali.advent.year2015.day7
 
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 
 

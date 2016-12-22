@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day24
 
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 /**
  * We have list of package weights which we try to split into n groups with the same weight.

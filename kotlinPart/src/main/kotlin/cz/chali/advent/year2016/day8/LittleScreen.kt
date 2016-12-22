@@ -2,7 +2,7 @@ package cz.chali.advent.year2016.day8
 
 import cz.chali.advent.InputParser
 import cz.chali.advent.transpose
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 data class Display(val lights: List<List<Boolean>>) {
     companion object Factory {

@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day10
 
 import cz.chali.advent.InputParser
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 import java.util.*
 
 class World(val bots: Map<Int, Set<Int>>, val outputs: Map<Int, Set<Int>>, val rules: Map<Int, Balance>) {

@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day6
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 case class Instruction(command: String, beginning: (Int, Int), end: (Int, Int))
 case class Command(command: String, coordinates: (Int, Int))

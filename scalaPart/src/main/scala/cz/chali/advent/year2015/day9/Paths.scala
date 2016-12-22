@@ -1,6 +1,6 @@
 package cz.chali.advent.year2015.day9
 
-import cz.chali.advent.year2015.input.InputReader
+import cz.chali.advent.input.InputReader
 
 case class Connection(point1: String, point2: String, distance: Int)
 

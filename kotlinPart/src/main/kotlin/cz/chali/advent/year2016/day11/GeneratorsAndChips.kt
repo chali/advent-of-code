@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day11
 
 import cz.chali.advent.combinations
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 import java.util.*
 
 /**

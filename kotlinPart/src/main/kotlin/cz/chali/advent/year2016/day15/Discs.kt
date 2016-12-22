@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day15
 
 import cz.chali.advent.InputParser
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 data class Disc(val size: Int, val starting: Int)
 

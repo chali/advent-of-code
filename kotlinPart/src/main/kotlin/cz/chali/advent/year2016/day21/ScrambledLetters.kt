@@ -1,7 +1,7 @@
 package cz.chali.advent.year2016.day21
 
 import cz.chali.advent.InputParser
-import cz.chali.advent.year2015.input.Reader
+import cz.chali.advent.input.Reader
 
 abstract class Instruction {
     abstract fun scramble(word: String): String
