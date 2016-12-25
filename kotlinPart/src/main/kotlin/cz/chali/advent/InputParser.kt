@@ -7,7 +7,8 @@ class InputParser<T>(val instructionRegexToParsingClosure: Map<Regex, (MatchResu
     }
 
     private fun parse(rawInstruction: String): T {
-        val matchedInstructionRegex: Regex = instructionRegexToParsingClosure.keys.first { it.matches(rawInstruction) }
+        val matchedInstructionRegex: Regex = instructionRegexToParsingClosure.keys.firstOrNull { it.matches(rawInstruction) }
+                ?: throw IllegalArgumentException("Could not parse $rawInstruction")
         val instruction: T? = instructionRegexToParsingClosure[matchedInstructionRegex]?.let { parsingClosure: (MatchResult) -> T ->
             matchedInstructionRegex.matchEntire(rawInstruction)?.let(parsingClosure)
         }
