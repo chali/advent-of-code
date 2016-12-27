@@ -23,8 +23,7 @@ class PasswordGenerator {
         val possibleHashes = hashSequence(roomId).filter(isHashValid)
         val orderToCharPair = { hash: String -> hash[5].toString().toInt() to hash[6] }
         val possiblePositionsAndChars = possibleHashes.map(orderToCharPair)
-        val onlyFirstOccurrencesOnGivenPosition = possiblePositionsAndChars.distinctBy { it.first }
-                .take(passwordLength)
+        val onlyFirstOccurrencesOnGivenPosition = possiblePositionsAndChars.distinctBy { it.first }.take(passwordLength)
         return onlyFirstOccurrencesOnGivenPosition.sortedBy { it.first }
                 .map { it.second }
                 .joinToString(separator = "")

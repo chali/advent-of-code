@@ -78,7 +78,8 @@ class GridTravel {
         val parsingRegex = Regex("([R,L])(\\d+)")
         return splitSteps.map(String::trim).map { rawStep: String ->
             val matchResult = parsingRegex.matchEntire(rawStep)
-            val (turn, distance) = matchResult?.destructured ?: throw IllegalArgumentException("Parsing failed")
+            val (turn, distance) = matchResult?.destructured
+                    ?: throw IllegalArgumentException("Parsing of $rawStep failed")
             Step(if (turn == "R") Turn.RIGHT else Turn.LEFT, distance.toInt())
         }
     }

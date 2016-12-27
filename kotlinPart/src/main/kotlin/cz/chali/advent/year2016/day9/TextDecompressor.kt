@@ -25,7 +25,8 @@ class TextDecompressor {
                 lengthOfDecompression(repeatedString, useNestedMarkers)
             else
                 numberOfChars.toLong()
-            return indexOfMarker.toLong() + times.toInt() * lengthOfRepeatedSections + lengthOfDecompression(text.drop(repeatedStringEnd), useNestedMarkers)
+            return indexOfMarker.toLong() + times.toInt() * lengthOfRepeatedSections +
+                    lengthOfDecompression(text.drop(repeatedStringEnd), useNestedMarkers)
         }
     }
 }

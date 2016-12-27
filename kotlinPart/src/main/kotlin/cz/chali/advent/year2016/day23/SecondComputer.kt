@@ -23,33 +23,60 @@ class ExecutionContext(val processLine: Int, val registers: Map<String, Long>, v
         return 0 > processLine || processLine >= code.size
     }
 
-    fun optimizeMultiplication(): ExecutionContext? {
-        if (! code.indices.contains(processLine + 5))
+    /* method tries to find expected sequence of primitive instruction and replace them with simple computation.
+       Computer doesn't have to evaluate them. */
+    private fun optimizeMultiplication(): ExecutionContext? {
+        val optimization = MultiplicationOptimization(processLine, code)
+        if (optimization.canBeCodeOptimized())
+            return optimization.optimize(this)
+        else
             return null
-        val copy = code[processLine]
-        val inc = code[processLine + 1]
-        val decInner = code[processLine + 2]
-        val jnzInner = code[processLine + 3]
-        val decOuter = code[processLine + 4]
-        val jnzOuter = code[processLine + 5]
-        val result = if (copy is Copy && inc is Increment && decInner is Decrement && jnzInner is JumpNotZero &&
-                decOuter is Decrement && jnzOuter is JumpNotZero) {
-            if (copy.targetRegister == decInner.register && copy.targetRegister == jnzInner.registerOrValue &&
-                    jnzInner.offset == "-2" && decOuter.register == jnzOuter.registerOrValue &&
-                    jnzOuter.offset == "-5") {
-                val left = valueOrRegisterContent(copy.sourceRegisterOrValue, this)
-                val right = valueOrRegisterContent(decOuter.register, this)
-                val target = inc.register
-                val multiplication = modifyRegister(target, this, 6, { previous -> previous + left * right})
-                val clear = modifyRegister(decInner.register, multiplication, 0, { previous -> 0 })
-                modifyRegister(decOuter.register, clear, 0, { previous -> 0 })
-            } else {
-                null
-            }
-        } else {
-            null
-        }
-        return result
+    }
+}
+
+class MultiplicationOptimization(private val processLine: Int, private val code: List<Instruction>) {
+    fun canBeCodeOptimized(): Boolean {
+        return codeHasAnotherFiveInstructions() && instructionsHaveExpectedTypesAndParameters()
+    }
+
+    private fun codeHasAnotherFiveInstructions(): Boolean {
+        return code.indices.contains(processLine + 5)
+    }
+
+    private fun instructionsHaveExpectedTypesAndParameters(): Boolean {
+        val (copy, inc, decInner, jnzInner, decOuter, jnzOuter) = code.subList(processLine, processLine + 6)
+        return copy is Copy && inc is Increment && decInner is Decrement && jnzInner is JumpNotZero &&
+                decOuter is Decrement && jnzOuter is JumpNotZero &&
+                expectedInstructionsInputs(copy, decInner, decOuter, jnzInner, jnzOuter)
+    }
+
+    private fun expectedInstructionsInputs(copy: Copy, decInner: Decrement, decOuter: Decrement, jnzInner: JumpNotZero, jnzOuter: JumpNotZero): Boolean {
+        return copy.targetRegister == decInner.register && copy.targetRegister == jnzInner.registerOrValue &&
+                jnzInner.offset == "-2" && decOuter.register == jnzOuter.registerOrValue &&
+                jnzOuter.offset == "-5"
+    }
+
+    private operator fun List<Instruction>.component6() = this[5]
+
+    fun optimize(context: ExecutionContext): ExecutionContext {
+        val target = whereStoreResult()
+        val multiplication = modifyRegister(target, context, incrementLine = 6,
+                operation = { previous -> previous + left(context) * right(context)})
+        return toClear().fold(multiplication, { previousContext, registerToClear ->
+            modifyRegister(registerToClear, previousContext, 0, { previous -> 0 })
+        })
+    }
+
+    private fun whereStoreResult() = (code[processLine + 1] as Increment).register
+    private fun left(context: ExecutionContext) =
+            valueOrRegisterContent((code[processLine] as Copy).sourceRegisterOrValue, context)
+    private fun right(context: ExecutionContext) =
+            valueOrRegisterContent((code[processLine + 4] as Decrement).register, context)
+    private fun toClear(): List<String> {
+        return listOf(
+                (code[processLine + 2] as Decrement).register,
+                (code[processLine + 4] as Decrement).register
+        )
     }
 }
 

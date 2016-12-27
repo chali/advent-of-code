@@ -8,7 +8,8 @@ class MessageCorrector {
     fun correct(rawMessages: List<String>): String {
         return rawMessages.map(String::toList)
                 .transpose()
-                .map { it.groupBy { it }.maxBy { it.value.size }?.key
+                .map {
+                    it.groupBy { it }.maxBy { it.value.size }?.key
                         ?: throw IllegalStateException("Could not find max occurrences in $it")
                 }
                 .joinToString(separator = "")
@@ -17,7 +18,8 @@ class MessageCorrector {
     fun correctLeastCommon(rawMessages: List<String>): String {
         return rawMessages.map(String::toList)
                 .transpose()
-                .map { it.groupBy { it }.minBy { it.value.size }?.key
+                .map {
+                    it.groupBy { it }.minBy { it.value.size }?.key
                         ?: throw IllegalStateException("Could not find max occurrences in $it")
                 }
                 .joinToString(separator = "")
