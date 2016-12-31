@@ -4,6 +4,15 @@ import cz.chali.advent.combinations
 import cz.chali.advent.input.Reader
 import java.util.*
 
+/* This code is able to solve part 2 in about 30 minutes which still has space for improvements. I think those areas
+ could be better:
+ - Representation of floors and components. Currently it is very "object oriented". Maybe it could lead to more
+  efficient comparison of states and better generation of next states.
+ - Distance function
+ - Maybe more pruning of explored space could be done. There might be more states which are equivalent and we don't
+ have to explore them again.
+ */
+
 enum class ComponentType {
     GENERATOR, MICROCHIP
 }
@@ -19,6 +28,8 @@ data class Component(val name: String, val type: ComponentType) : Comparable<Com
 }
 data class Building(val elevator: Int, val floors: List<Set<Component>>) {
 
+    //this helps us to compare state which are not exactly equal but their are equivalent and we can skip
+    //already explored equivalent states
     val comparisonForm: String = comparisonForm()
     val hashcode = comparisonForm.hashCode()
 
